@@ -5,13 +5,13 @@ import time
 import sym
 
 #%% Variáveis
-def N(x=5):
+def N(x=1):
     return x
 
-def L(x=1):
+def L(x=10):
     return x
 
-def R(x=50):
+def R(x=5):
     return x
 
 #%% Integração
