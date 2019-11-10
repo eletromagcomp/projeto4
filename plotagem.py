@@ -3,8 +3,11 @@ import numpy as np
 import matplotlib.gridspec as gridspec
 import time
 
+from mpl_toolkits.mplot3d import axes3d, Axes3D #<-- Note the capitalization! 
+
 fig = plt.figure()
-ax = fig.gca(projection='3d')
+
+ax = Axes3D(fig)
 
 def R():
     return 10
