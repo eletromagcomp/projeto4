@@ -126,7 +126,7 @@
            dR(3) = z - z0
            
            call cross(Iv,dR,fm) !calcula o prod. vetorial
-           fm = fm/((x-x0)**2+(y0)**2+(z-z0)**2) !divide por dr^3/2
+           fm = fm/((x-x0)**2+(y0)**2+(z-z0)**2)**(3.0/2) !divide por dr^3/2
            
            !ponto da esquerda
            theta = theta - h
@@ -140,7 +140,7 @@
            dR(3) = z - z0
            
            call cross(Iv,dR,fl) !calcula o prod. vetorial
-           fl = fl/((x-x0)**2+(y0)**2+(z-z0)**2) !divide por dr^3/2
+           fl = fl/((x-x0)**2+(y0)**2+(z-z0)**2)**(3.0/2) !divide por dr^3/2
            
            theta = theta + h !volta pro meio
            
@@ -156,7 +156,7 @@
            dR(3) = z - z0
            
            call cross(Iv,dR,fr) !calcula o prod. vetorial
-           fr = fr/((x-x0)**2+(y-y0)**2+(z-z0)**2) !divide por dr^3/2
+           fr = fr/((x-x0)**2+(y-y0)**2+(z-z0)**2)**(3.0/2) !divide por dr^3/2
            
            theta = theta - h !volta pro meio
            
