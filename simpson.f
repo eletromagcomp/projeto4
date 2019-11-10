@@ -1,3 +1,33 @@
+        subroutine simpson_malha(n,L,R,B_field)
+        
+        !calcula o campo magnetico numa malha que varre o plano xz
+        
+           integer kx,kz,p,q, n
+           real*8  L, R, x, z, B(3), B_field(1000,600,3)
+           
+!f2py intent(in) n, L, R, x, z
+!f2py intent(out) B_field
+           
+           !dimensoes da malha
+           p = 1000
+           q = 600
+           
+           B = 0.d0
+           
+           do kx=1,p
+              x = (kx-p/2)*5.d0*R/dble(p/2)
+              do kz=1,q
+                 z = (kz-q/3)*3.d0*L/dble(q)
+                 
+                 call simpson_ponto(n,L,R,x,z,B)
+                 B_field(kx,kz,:) = B
+                 
+              end do
+           end do
+        
+        end subroutine
+        
+        
         subroutine simpson_ponto(n,L,R,x,z,B)
         
         !calcula o campo magnetico num ponto do plano xz
