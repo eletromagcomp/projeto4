@@ -8,7 +8,7 @@ import sym
 def N(x=4):
     return x
 
-def L(x=1):
+def L(x=0.5):
     return x
 
 def R(x=1):
@@ -49,7 +49,7 @@ strm = ax.streamplot(x,z,Campo_x, Campo_z, color='r', linewidth=2, cmap='autumn'
 for n in range(0,limite_espiras):
     plt.plot(25, n*50/N(), 'bo')
     plt.plot(-25, n*50/N(), 'bo')
-plt.savefig('N='+str(N())+'_L='+str(L())+'_R='+str(R())+'_streamplot.png', bbox_inches='tight')
+plt.savefig('N='+str(limite_espiras)+'_L='+str(L())+'_R='+str(R())+'_streamplot.png', bbox_inches='tight')
 plt.show()
 
 
@@ -61,7 +61,7 @@ ax_quiver.quiver(X[::20,::20], Z[::20,::20], V[::20,::20], U[::20,::20], units='
 for n in range(0,limite_espiras):
     plt.plot(25, n*50/N(), 'bo')
     plt.plot(-25, n*50/N(), 'bo')
-plt.savefig('N='+str(N())+'_L='+str(L())+'_R'+str(R())+'_quiver.png', color='r', bbox_inches='tight')
+plt.savefig('N='+str(limite_espiras)+'_L='+str(L())+'_R'+str(R())+'_quiver.png', color='r', bbox_inches='tight')
 plt.show()
 
 #%% Plot
