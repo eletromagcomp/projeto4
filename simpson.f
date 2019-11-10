@@ -1,26 +1,56 @@
-        subroutine simpson_malha(n,L,R,B_field)
+        subroutine simpson_malha(n,L,R,B_field_v)
         
         !calcula o campo magnetico numa malha que varre o plano xz
         
            integer kx,kz,p,q, n
-           real*8  L, R, x, z, B(3), B_field(1000,600,3)
+           real*8  L, R, x, y, z, B(3), B_field_v(250,150,3)
            
 !f2py intent(in) n, L, R, x, z
-!f2py intent(out) B_field
+!f2py intent(out) B_field_v
            
            !dimensoes da malha
-           p = 1000
-           q = 600
+           p = 250
+           q = 150
            
            B = 0.d0
-           
+           y = 0.d0
            do kx=1,p
               x = (kx-p/2)*5.d0*R/dble(p/2)
               do kz=1,q
                  z = (kz-q/3)*3.d0*L/dble(q)
                  
-                 call simpson_ponto(n,L,R,x,z,B)
-                 B_field(kx,kz,:) = B
+                 call simpson_ponto(n,L,R,x,y,z,B)
+                 B_field_v(kx,kz,:) = B
+                 
+              end do
+           end do
+        
+        end subroutine
+        
+!############################################################    
+        subroutine simpson_malha_hor(n,L,R,B_field_h)
+        
+        !calcula o campo magnetico num plano paralelo a xy
+        
+           integer kx,ky,p,s, n
+           real*8  L, R, x, y, z, B(3), B_field_h(250,250,3)
+           
+!f2py intent(in) n, L, R, x, z
+!f2py intent(out) B_field_h
+           
+           !dimensoes da malha
+           p = 250
+           s = 250
+           
+           B = 0.d0
+           z = L
+           do kx=1,s
+              x = (kx-p/2)*5.d0*R/dble(p/2)
+              do ky=1,s
+                 y = (ky-s/2)*5.d0*R/dble(s/2)
+                 
+                 call simpson_ponto(n,L,R,x,y,z,B)
+                 B_field_h(kx,ky,:) = B
                  
               end do
            end do
@@ -28,7 +58,9 @@
         end subroutine
         
         
-        subroutine simpson_ponto(n,L,R,x,z,B)
+!#############################################################
+        
+        subroutine simpson_ponto(n,L,R,x,y,z,B)
         
         !calcula o campo magnetico num ponto do plano xz
         
@@ -50,7 +82,7 @@
           !calcula o campo num po
           theta = h
           z0 = 0.d0
-          y = 0.d0
+          !y = 0.d0
           do i=1,n
              do j=1,m
                 !componentes da corrente na espira
@@ -78,7 +110,7 @@
         
         !calcula a contribuicao de uma secao de espira na integral
         
-           real*8 theta, dB(3), fl(3), fm(3), fr(3), z0, x,y,z, Iv(3)
+           real*8 theta, dB(3), fl(3), fm(3), fr(3), z0, x,y,z,Iv(3)
            real*8 x0, y0, R, h, dR(3)
            
            Iv=0.d0
@@ -124,7 +156,7 @@
            dR(3) = z - z0
            
            call cross(Iv,dR,fr) !calcula o prod. vetorial
-           fr = fr/((x-x0)**2+(y0)**2+(z-z0)**2) !divide por dr^3/2
+           fr = fr/((x-x0)**2+(y-y0)**2+(z-z0)**2) !divide por dr^3/2
            
            theta = theta - h !volta pro meio
            
