@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.gridspec as gridspec
 import time
-
 from mpl_toolkits.mplot3d import axes3d, Axes3D #<-- Note the capitalization! 
 
 fig = plt.figure()
@@ -13,6 +12,9 @@ def R():
     return 10
 def L():
     return 10
+
+def n():
+    return 100
 
 
 #%% Plotagem 3D com o quiver
@@ -49,14 +51,18 @@ print(tempo)
 
 #%% Plotagem 2D lateral
 
-#Precisa ser a mesma quantidade
-
 fig, ax = plt.subplots()
 
-Y, X = np.mgrid[-5*R():5*R():100j, -L():2*L():100j]
+Y, X = np.mgrid[-5*R():5*R():1000j, -L():2*L():600j]
 
 U = -2*np.sin(X)
 V = 5*np.cos(X)
+
+'''
+campo = sym.simpson_malha(n(),L(),R())
+U = campo[X,Y,0]
+V = campo[X,Y,1]
+'''
 
 modulo = (U**2+V**2)**(1/2)
 
@@ -68,4 +74,3 @@ ax.set_title('Varying Color')
 plt.show()
 
 #%% Plotagem 2D superior
-
